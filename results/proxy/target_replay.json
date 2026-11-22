@@ -1,0 +1,275 @@
+{
+  "batch_seconds": 3.2710869000002276,
+  "wav_only": {
+    "overall": {
+      "recordings": 600,
+      "accuracy": 0.5966666666666667,
+      "balanced_accuracy": 0.5966666666666667,
+      "roc_auc": 0.6337388888888889,
+      "average_precision": 0.6472297168251618,
+      "false_positive_rate": 0.3566666666666667,
+      "false_negative_rate": 0.45,
+      "confusion_matrix": [
+        [
+          193,
+          107
+        ],
+        [
+          135,
+          165
+        ]
+      ],
+      "per_class": {
+        "normal": {
+          "precision": 0.5884146341463414,
+          "recall": 0.6433333333333333,
+          "f1": 0.6146496815286624,
+          "support": 300
+        },
+        "anomaly": {
+          "precision": 0.6066176470588235,
+          "recall": 0.55,
+          "f1": 0.5769230769230769,
+          "support": 300
+        }
+      }
+    },
+    "by_section": {
+      "0": {
+        "recordings": 200,
+        "accuracy": 0.56,
+        "balanced_accuracy": 0.56,
+        "roc_auc": 0.5545,
+        "average_precision": 0.569256115390322,
+        "false_positive_rate": 0.27,
+        "false_negative_rate": 0.61,
+        "confusion_matrix": [
+          [
+            73,
+            27
+          ],
+          [
+            61,
+            39
+          ]
+        ],
+        "per_class": {
+          "normal": {
+            "precision": 0.5447761194029851,
+            "recall": 0.73,
+            "f1": 0.6239316239316239,
+            "support": 100
+          },
+          "anomaly": {
+            "precision": 0.5909090909090909,
+            "recall": 0.39,
+            "f1": 0.46987951807228917,
+            "support": 100
+          }
+        }
+      },
+      "1": {
+        "recordings": 200,
+        "accuracy": 0.57,
+        "balanced_accuracy": 0.5700000000000001,
+        "roc_auc": 0.7379000000000001,
+        "average_precision": 0.7161643915518067,
+        "false_positive_rate": 0.77,
+        "false_negative_rate": 0.09,
+        "confusion_matrix": [
+          [
+            23,
+            77
+          ],
+          [
+            9,
+            91
+          ]
+        ],
+        "per_class": {
+          "normal": {
+            "precision": 0.71875,
+            "recall": 0.23,
+            "f1": 0.3484848484848485,
+            "support": 100
+          },
+          "anomaly": {
+            "precision": 0.5416666666666666,
+            "recall": 0.91,
+            "f1": 0.6791044776119403,
+            "support": 100
+          }
+        }
+      },
+      "2": {
+        "recordings": 200,
+        "accuracy": 0.66,
+        "balanced_accuracy": 0.6599999999999999,
+        "roc_auc": 0.66985,
+        "average_precision": 0.7475119755563082,
+        "false_positive_rate": 0.03,
+        "false_negative_rate": 0.65,
+        "confusion_matrix": [
+          [
+            97,
+            3
+          ],
+          [
+            65,
+            35
+          ]
+        ],
+        "per_class": {
+          "normal": {
+            "precision": 0.5987654320987654,
+            "recall": 0.97,
+            "f1": 0.7404580152671756,
+            "support": 100
+          },
+          "anomaly": {
+            "precision": 0.9210526315789473,
+            "recall": 0.35,
+            "f1": 0.5072463768115942,
+            "support": 100
+          }
+        }
+      }
+    }
+  },
+  "known_section": {
+    "overall": {
+      "recordings": 600,
+      "accuracy": 0.5983333333333334,
+      "balanced_accuracy": 0.5983333333333334,
+      "roc_auc": 0.6483166666666667,
+      "average_precision": 0.6876215355101613,
+      "false_positive_rate": 0.3566666666666667,
+      "false_negative_rate": 0.44666666666666666,
+      "confusion_matrix": [
+        [
+          193,
+          107
+        ],
+        [
+          134,
+          166
+        ]
+      ],
+      "per_class": {
+        "normal": {
+          "precision": 0.5902140672782875,
+          "recall": 0.6433333333333333,
+          "f1": 0.6156299840510366,
+          "support": 300
+        },
+        "anomaly": {
+          "precision": 0.608058608058608,
+          "recall": 0.5533333333333333,
+          "f1": 0.5794066317626527,
+          "support": 300
+        }
+      }
+    },
+    "by_section": {
+      "0": {
+        "recordings": 200,
+        "accuracy": 0.56,
+        "balanced_accuracy": 0.56,
+        "roc_auc": 0.5584,
+        "average_precision": 0.5924415341123307,
+        "false_positive_rate": 0.27,
+        "false_negative_rate": 0.61,
+        "confusion_matrix": [
+          [
+            73,
+            27
+          ],
+          [
+            61,
+            39
+          ]
+        ],
+        "per_class": {
+          "normal": {
+            "precision": 0.5447761194029851,
+            "recall": 0.73,
+            "f1": 0.6239316239316239,
+            "support": 100
+          },
+          "anomaly": {
+            "precision": 0.5909090909090909,
+            "recall": 0.39,
+            "f1": 0.46987951807228917,
+            "support": 100
+          }
+        }
+      },
+      "1": {
+        "recordings": 200,
+        "accuracy": 0.575,
+        "balanced_accuracy": 0.5750000000000001,
+        "roc_auc": 0.799,
+        "average_precision": 0.7978521420374749,
+        "false_positive_rate": 0.77,
+        "false_negative_rate": 0.08,
+        "confusion_matrix": [
+          [
+            23,
+            77
+          ],
+          [
+            8,
+            92
+          ]
+        ],
+        "per_class": {
+          "normal": {
+            "precision": 0.7419354838709677,
+            "recall": 0.23,
+            "f1": 0.3511450381679389,
+            "support": 100
+          },
+          "anomaly": {
+            "precision": 0.5443786982248521,
+            "recall": 0.92,
+            "f1": 0.6840148698884758,
+            "support": 100
+          }
+        }
+      },
+      "2": {
+        "recordings": 200,
+        "accuracy": 0.66,
+        "balanced_accuracy": 0.6599999999999999,
+        "roc_auc": 0.67135,
+        "average_precision": 0.7561987957115822,
+        "false_positive_rate": 0.03,
+        "false_negative_rate": 0.65,
+        "confusion_matrix": [
+          [
+            97,
+            3
+          ],
+          [
+            65,
+            35
+          ]
+        ],
+        "per_class": {
+          "normal": {
+            "precision": 0.5987654320987654,
+            "recall": 0.97,
+            "f1": 0.7404580152671756,
+            "support": 100
+          },
+          "anomaly": {
+            "precision": 0.9210526315789473,
+            "recall": 0.35,
+            "f1": 0.5072463768115942,
+            "support": 100
+          }
+        }
+      }
+    }
+  }
+}

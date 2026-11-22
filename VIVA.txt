@@ -1,0 +1,71 @@
+ACOUSTIC FAN FAILURE DETECTION | VIVA GUIDE
+
+1. Explain the project in thirty seconds
+
+A user uploads a fan WAV. The program converts the waveform into a time-frequency image. A convolutional neural network maps that image to 24 learned features, and a binary classifier produces one fault score for the entire recording. A fixed threshold converts that score into Normal or Anomaly. The final model achieved 62.0% accuracy on the 600-recording target replay. Its main limitation is generalization when operating conditions change.
+
+2. What data did we use?
+
+The verified fan set contains 3,009 healthy training files, 600 labeled source-test files and 600 labeled target-test files. Each WAV in the original audit was mono, 16 kHz and ten seconds long. The 3,009 healthy training clips include 1,000 source and three target-condition examples per fan section. The word “target” in those nine training filenames describes an operating condition. Those clips belong to train.
+
+We used source_test for supervised development. A seeded split stratified by section and label gave 480 training recordings (240 of each class) and 120 validation recordings (60 of each). The target_test labels entered the final scoring step after freezing. Earlier project iterations already evaluated this benchmark, so these results are a replay. Sections 03–05 gave another 3,009 healthy recordings for checking false alarms. They contain no labeled faults for estimating recall.
+
+3. How is a waveform converted to a model input?
+
+SoundFile decodes the WAV. Multiple channels are averaged and polyphase resampling converts other sample rates to 16 kHz. The loader checks for empty or non-finite samples. Sound level is retained. The cleaning function uses its pass-through default. Audio is divided into one-second windows with zero padding at the end if needed.
+
+Within a window the program applies a 2,048-sample periodic Hann window, a 512-sample hop and a real FFT. Squared magnitude gives power. A 64-band Mel filter bank combines nearby frequencies, and a logarithm compresses the power range. Center padding gives 32 frames per one-second chunk. Frames from all chunks stay in time order and are summarized into 40 time bins. Each bin stores the mean and standard deviation in each Mel band. A recording thus becomes a 64 by 40 by 2 tensor. Long recordings are compressed more heavily than short ones. The tested recording length was ten seconds.
+
+The saved per-band and per-channel means and standard deviations came from healthy source-domain training inputs. Uploads and training both call the same feature function and use the same saved arrays.
+
+4. Why pretrain on other machines?
+
+The auxiliary task first teaches a CNN to identify three healthy fan sections. Each batch also includes normal gearbox, pump, slider or valve sounds, sampled from 250 files per type. For those sounds, the training loss discourages a strong preference for any of the three fan sections. This is proxy outlier exposure. It supplies examples of acoustically different machines without labeling those machines as faulty fans.
+
+The encoder has an initial convolution, a residual block, pooling, a final convolution, and a dense layer with 24 tanh activations. A residual block adds the block input to a learned transformation, providing a direct path for information and gradients. An auxiliary three-class output predicts section identity. After twelve pretraining epochs, three adaptation epochs use the nine target-condition healthy fan clips. Matching source/target sections are pulled together in feature space, while different sections are encouraged to stay at least a margin apart. This is a compact CPU adaptation inspired by CP-JKU's DCASE 2021 method.
+Reference: https://github.com/OptimusPrimus/dcase2021_task2
+
+5. What changed in the final version?
+
+The deployed system replaces the section output with a supervised fault output. First, we extract the 24 features from each labeled source-training recording. A scaler fitted on the current training fold standardizes these values. Regularized logistic regression learns a weight per feature and a bias. We combine the scaler and regression coefficients algebraically into a single Keras dense layer. Its sigmoid maps the weighted sum to a score between zero and one. This is the frozen-encoder candidate.
+
+The second candidate starts with exactly that head. It also updates the last convolution, the 24-unit dense embedding and the binary head for ten epochs with Adam at learning rate 0.00003 and binary cross-entropy. The early convolutional layers stay frozen. The nine healthy target-condition examples join the supervised training batches. This fine-tuned candidate won model selection. The deployed graph needs only the WAV and does not use its filename, section ID or user-supplied ground truth.
+
+6. How did we choose the model and threshold?
+
+Within the 480 source-training recordings we withheld one section's fault labels at a time, trained the supervised candidate on the other two sections and scored the held section. The encoder had seen healthy examples from those sections during pretraining. The test therefore measures transfer of fault supervision across sections. For each fold we used its ROC curve to measure achievable recall at up to 10% false alarms. These fold-level operating points serve for model comparison. They do not determine the deployment threshold.
+
+Held-section recalls for 00, 01 and 02:
+  Frozen       16.25%, 2.50%, 10.00%   (mean 9.58%)
+  Fine-tuned   17.50%, 3.75%, 15.00%   (mean 12.08%)
+
+The winning model was refitted on all 480 source training recordings with the nine adaptation normals. A separate 120-recording source validation set selected the fixed threshold that maximized fault recall subject to a false-alarm rate of at most 10%. The selected threshold was 0.74636757. Validation caught 21 of 60 faults and raised 6 false alarms among 60 healthy recordings. The binary prediction is Anomaly for scores at or above the threshold.
+
+7. What do the results mean?
+
+Target replay confusion matrix (rows actual, columns predicted):
+                        Normal    Anomaly
+  Normal                  214         86
+  Anomaly                 142        158
+
+Accuracy = (214 + 158) / 600 = 62.0%.
+Anomaly precision = 158 / (158 + 86) = 64.8%.
+Anomaly recall = 158 / 300 = 52.7%.
+Anomaly F1 = harmonic mean of anomaly precision and recall = 0.581.
+False-alarm rate = 86 / 300 = 28.7%.
+Missed-fault rate = 142 / 300 = 47.3%.
+ROC-AUC = 0.658. This measures ranking across thresholds.
+Average precision = 0.670. This summarizes precision over changes in recall.
+Accuracy improved from 59.7% for the previous WAV-only CNN. False alarms fell from 107 to 86, while detections fell from 165 to 158. On the separate healthy sections the new model flagged 994 of 3,009 clips (33.0%), compared with 1,749 previously. Neither the 85% accuracy goal nor the desired combination of 90% recall and 10% false alarms was achieved.
+
+8. How does the interface generate a report?
+
+The local Python server receives each uploaded WAV, computes a prediction in memory and returns its score, threshold and class. The browser displays the filename and lets the user enter a verified condition. These labels are used only for reporting. Unknown-label files still receive predictions. Reports use only successfully classified, labeled uploads, with one vote per recording. Macro averages give the two classes equal weight. Weighted averages use their true sample counts (support). A confusion matrix counts the four outcomes. A single-class batch supports only some metrics; the app marks rates with missing denominators and displays ranking metrics when both classes occur. Per-class precision, recall and F1 with undefined denominators use zero. Reloading the page clears the upload list.
+
+9. What conclusions can we defend?
+
+A score of 0.8 clears the fixed threshold. Calling it an 80% chance of a real fault would require probability calibration and independent verification under deployment conditions. One prediction cannot establish accuracy. Healthy fans can change sound with speed, load, surroundings and microphone placement. The measured cross-section results show the difficulty of fault transfer; they do not identify which physical factor caused a particular error. The model detects acoustic patterns and cannot diagnose a particular mechanical defect. A stronger field test would reserve later recording sessions from the intended fan with verified healthy and faulty examples under representative conditions.
+
+10. Where to find the implementation
+
+proxy_cnn.py defines acoustic features and encoder pretraining. train_final.py implements the frozen-head and fine-tuned comparison, final fitting and threshold selection. final_model.py loads the winning checkpoint and performs inference. app.py and index.html implement uploads and reporting. evaluate_final_normals.py runs the additional healthy-fan evaluation. The checkpoints/final directory holds the Keras graph and weights, normalization arrays and decision threshold. results/final holds the replay report, predictions, and additional normal-only test results.

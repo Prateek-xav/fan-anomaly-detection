@@ -1,0 +1,33 @@
+{
+  "recordings": 600,
+  "accuracy": 0.62,
+  "balanced_accuracy": 0.62,
+  "roc_auc": 0.6575222222222222,
+  "average_precision": 0.6704867453555587,
+  "false_positive_rate": 0.2866666666666667,
+  "false_negative_rate": 0.47333333333333333,
+  "confusion_matrix": [
+    [
+      214,
+      86
+    ],
+    [
+      142,
+      158
+    ]
+  ],
+  "per_class": {
+    "normal": {
+      "precision": 0.601123595505618,
+      "recall": 0.7133333333333334,
+      "f1": 0.6524390243902439,
+      "support": 300
+    },
+    "anomaly": {
+      "precision": 0.6475409836065574,
+      "recall": 0.5266666666666666,
+      "f1": 0.5808823529411765,
+      "support": 300
+    }
+  }
+}

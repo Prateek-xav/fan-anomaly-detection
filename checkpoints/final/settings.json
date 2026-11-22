@@ -1,0 +1,49 @@
+{
+  "method": "fine_tuned",
+  "threshold": 0.7463675737380981,
+  "section_cv_recall_at_10pct_fpr": {
+    "frozen": [
+      0.1625,
+      0.025,
+      0.1
+    ],
+    "fine_tuned": [
+      0.175,
+      0.0375,
+      0.15
+    ]
+  },
+  "validation": {
+    "recordings": 120,
+    "accuracy": 0.625,
+    "balanced_accuracy": 0.625,
+    "roc_auc": 0.7783333333333333,
+    "average_precision": 0.7744294753250072,
+    "false_positive_rate": 0.1,
+    "false_negative_rate": 0.65,
+    "confusion_matrix": [
+      [
+        54,
+        6
+      ],
+      [
+        39,
+        21
+      ]
+    ],
+    "per_class": {
+      "normal": {
+        "precision": 0.5806451612903226,
+        "recall": 0.9,
+        "f1": 0.7058823529411765,
+        "support": 60
+      },
+      "anomaly": {
+        "precision": 0.7777777777777778,
+        "recall": 0.35,
+        "f1": 0.4827586206896552,
+        "support": 60
+      }
+    }
+  }
+}

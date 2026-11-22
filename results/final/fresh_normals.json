@@ -1,0 +1,21 @@
+{
+  "unique_normals": 3009,
+  "duplicate_waveforms_skipped": 0,
+  "false_alarms": 994,
+  "sections": {
+    "03_source": 1000,
+    "03_target": 3,
+    "04_source": 1000,
+    "04_target": 3,
+    "05_source": 1000,
+    "05_target": 3
+  },
+  "false_alarms_by_section_domain": {
+    "03_source": 308,
+    "03_target": 3,
+    "04_source": 450,
+    "04_target": 2,
+    "05_source": 229,
+    "05_target": 2
+  }
+}

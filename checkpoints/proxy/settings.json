@@ -1,0 +1,74 @@
+{
+  "wav_only": {
+    "threshold": 0.16852521896362305,
+    "validation": {
+      "recordings": 120,
+      "accuracy": 0.6833333333333333,
+      "balanced_accuracy": 0.6833333333333333,
+      "roc_auc": 0.7777777777777778,
+      "average_precision": 0.8108007330049389,
+      "false_positive_rate": 0.1,
+      "false_negative_rate": 0.5333333333333333,
+      "confusion_matrix": [
+        [
+          54,
+          6
+        ],
+        [
+          32,
+          28
+        ]
+      ],
+      "per_class": {
+        "normal": {
+          "precision": 0.627906976744186,
+          "recall": 0.9,
+          "f1": 0.7397260273972602,
+          "support": 60
+        },
+        "anomaly": {
+          "precision": 0.8235294117647058,
+          "recall": 0.4666666666666667,
+          "f1": 0.5957446808510638,
+          "support": 60
+        }
+      }
+    }
+  },
+  "known_section": {
+    "threshold": 0.16852521896362305,
+    "validation": {
+      "recordings": 120,
+      "accuracy": 0.7,
+      "balanced_accuracy": 0.7,
+      "roc_auc": 0.7869444444444444,
+      "average_precision": 0.8331668160246504,
+      "false_positive_rate": 0.1,
+      "false_negative_rate": 0.5,
+      "confusion_matrix": [
+        [
+          54,
+          6
+        ],
+        [
+          30,
+          30
+        ]
+      ],
+      "per_class": {
+        "normal": {
+          "precision": 0.6428571428571429,
+          "recall": 0.9,
+          "f1": 0.75,
+          "support": 60
+        },
+        "anomaly": {
+          "precision": 0.8333333333333334,
+          "recall": 0.5,
+          "f1": 0.625,
+          "support": 60
+        }
+      }
+    }
+  }
+}
